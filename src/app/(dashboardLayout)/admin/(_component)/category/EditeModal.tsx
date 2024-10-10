@@ -5,7 +5,6 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
   Button,
   useDisclosure,
   Input,
@@ -13,33 +12,39 @@ import {
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { categorySchema } from "@/ZodSchema/categorySchema";
-import { useCreateCategory } from "@/hooks/admin/category";
+import { useUpdateCategory } from "@/hooks/admin/category";
 import LoadingBlur from "@/components/shared/loading";
+import { Pencil } from "lucide-react";
+import { TCategoty } from "@/types/admin/category";
 
-export default function UpdateCategoryModal(item) {
+export default function UpdateCategoryModal(item: TCategoty) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { mutate: handelCreateCategory, isPending } = useCreateCategory();
+  const { mutate: handelUpdateCategory, isPending } = useUpdateCategory();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
     resolver: zodResolver(categorySchema),
-    defaultValues: {},
+    defaultValues: { name: item.name },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    handelCreateCategory(data);
-    reset();
+    // const id = item._id;
+    const updatedata = {
+      data,
+      id: item._id as string,
+    };
+    handelUpdateCategory(updatedata);
   };
   if (isPending) {
     <LoadingBlur />;
   }
   return (
     <div>
-      <Button color="primary" onPress={onOpen}>
-        Create
+      <Button isIconOnly onPress={onOpen}>
+        <Pencil color="green" size={20} />
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -63,16 +68,11 @@ export default function UpdateCategoryModal(item) {
                     errorMessage={errors.name && `${errors?.name?.message}`}
                   />
 
-                  <Button color="primary" type="submit">
+                  <Button color="primary" type="submit" onPress={onClose}>
                     Save
                   </Button>
                 </form>
               </ModalBody>
-              <ModalFooter>
-                <Button color="warning" onPress={onClose}>
-                  Close
-                </Button>
-              </ModalFooter>
             </>
           )}
         </ModalContent>

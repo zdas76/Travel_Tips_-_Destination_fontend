@@ -2,21 +2,24 @@
 import React from "react";
 import CreateCategoryModal from "../(_component)/category/Modal";
 import { Divider } from "@nextui-org/react";
-import { useGetCategory } from "@/hooks/admin/category";
+import { useDeleteCategory, useGetCategory } from "@/hooks/admin/category";
 import LoadingBlur from "@/components/shared/loading";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import UpdateCategoryModal from "../(_component)/category/EditeModal";
+import { TCategoty } from "@/types/admin/category";
 
 export default function CategoryPage() {
-  const { data: categoris, isLoading } = useGetCategory();
-  console.log(categoris);
+  const { data: categorisData, isLoading } = useGetCategory();
+
+  const { mutate: handeldelete } = useDeleteCategory();
+  const Categories = categorisData?.data;
+
   if (isLoading) {
     <LoadingBlur />;
   }
 
-  const handelDelete = (data) => {};
-  const handelEdite = (data) => {
-    console.log(data);
+  const handelDeleteCategory = (id: string) => {
+    handeldelete(id);
   };
 
   return (
@@ -27,7 +30,7 @@ export default function CategoryPage() {
       </div>
       <Divider />
       <div>
-        {categoris?.data.map((item, index) => (
+        {Categories?.data?.map((item: TCategoty, index: number) => (
           <div key={index} className="flex justify-between border-b-2 my-2">
             <p className="">
               <span className="mr-5">{index + 1}</span>
@@ -35,15 +38,11 @@ export default function CategoryPage() {
             </p>
             <p className="flex gap-5">
               <span className="border bg-slate-200 p-3 rounded-full cursor-pointer">
-                <Pencil
-                  onClick={() => <UpdateCategoryModal {...item} />}
-                  color="green"
-                  size={20}
-                />
+                <UpdateCategoryModal {...item} />
               </span>
               <span className="bg-slate-200 p-3 rounded-full cursor-pointer">
                 <Trash2
-                  onClick={() => handelDelete(item._id)}
+                  onClick={() => handelDeleteCategory(item._id as string)}
                   color="red"
                   size={20}
                 />

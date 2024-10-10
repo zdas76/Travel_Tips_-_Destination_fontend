@@ -22,3 +22,29 @@ export const getAllCategory = async () => {
     throw error;
   }
 };
+
+export const updateCategory = async (updateData: {
+  id: string;
+  data: FieldValues;
+}) => {
+  const { id, data } = updateData;
+  console.log("data", id, data, updateData);
+
+  try {
+    const res = await nexiosInstance.put(`/category/${id}`, data);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteCategory = async (id: string) => {
+  try {
+    const res = await nexiosInstance.delete(`/category/${id}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
