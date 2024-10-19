@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React from "react";
 import CreateCategoryModal from "../(_component)/category/Modal";
@@ -10,9 +11,9 @@ import { TCategoty } from "@/types/admin/category";
 
 export default function CategoryPage() {
   const { data: categorisData, isLoading } = useGetCategory();
+  const Categories = categorisData?.data;
 
   const { mutate: handeldelete } = useDeleteCategory();
-  const Categories = categorisData?.data;
 
   if (isLoading) {
     <LoadingBlur />;

@@ -21,9 +21,9 @@ export default function Navber() {
   const { user } = useUser();
 
   const menuItems = [
-    { label: "News Feed", link: "news-feed" },
-    { label: "About Us", link: "about" },
-    { label: "Contact Us", link: "contact" },
+    { label: "News Feed", link: "/news-feed" },
+    { label: "About Us", link: "/about" },
+    { label: "Contact Us", link: "/contact" },
   ];
 
   return (

@@ -31,7 +31,7 @@ export default function UpdateCategoryModal(item: TCategoty) {
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    // const id = item._id;
+    
     const updatedata = {
       data,
       id: item._id as string,

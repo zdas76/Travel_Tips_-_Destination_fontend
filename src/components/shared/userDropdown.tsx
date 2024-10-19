@@ -17,7 +17,9 @@ export default function UserDropdown(user: TUser) {
       </DropdownTrigger>
       <DropdownMenu>
         <DropdownItem>
-          <Link href={`${user.role}`}>Dashboard</Link>
+          <Link href={`/${user.role}`} key={`${user.role}`}>
+            Dashboard
+          </Link>
         </DropdownItem>
         <DropdownItem
           key="delete"

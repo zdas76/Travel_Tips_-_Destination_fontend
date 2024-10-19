@@ -33,7 +33,7 @@ export default function RegisterPage() {
     <LoadingBlur />;
   }
   return (
-    <div className="container am-auto">
+    <div className="container mx-auto">
       <div className="w-full md:w-[500px] mx-auto mt-12 border p-5 rounded-xl shadow-xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
